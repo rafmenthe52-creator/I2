@@ -145,7 +145,7 @@ Status game_reader_load_player(Game* game, char* filename){
   char name[WORD_SIZE] = "";
   char *toks = NULL;      /*Tokens separated by strtok*/
   Player *player = NULL;
-  Id id = NO_ID, location = NO_ID;
+  Id id = NO_ID;
   Id object = NO_ID;
   Status status= OK;
 
