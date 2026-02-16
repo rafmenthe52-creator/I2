@@ -1,3 +1,13 @@
+/**
+ * @brief It implements the player module
+ *
+ * @file player.c
+ * @author Adrian Covarrubias-AC
+ * @version 1.0
+ * @date 14-02-2026
+ * @copyright GNU Public License
+ */
+
 #include "player.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -123,7 +133,7 @@ Status player_delete_object_from_inventory(Player *player){
     return ERROR;
   }
 
-  player->objects[player->n_objects_player]=NO_ID;
+  player->objects[player->n_objects_player-1]=NO_ID;
   player->n_objects_player--;
 
   return OK;
@@ -160,7 +170,7 @@ Status player_print(Player* player) {
   if (player_get_n_objects(player) > 0) {
     fprintf(stdout, "---> Player have object(s).\n");
   }else {
-    fprintf(stdout, "---> Player has no objects");
+    fprintf(stdout, "---> Player has no objects.\n");
   }
 
   return OK;
