@@ -18,12 +18,6 @@
 #include "game.h"
 
 /**
-   Private functions
-*/
-
-Status game_reader_load_spaces(Game *game, char *filename);
-
-/**
    Implementation of public functions
 */
 
