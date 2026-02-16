@@ -61,7 +61,7 @@ int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name) {
 
   if ((*gengine = graphic_engine_create()) == NULL) {
     game_destroy(game);
-    return 2;
+    return 1;
   }
 
   return 0;
@@ -71,3 +71,4 @@ void game_loop_cleanup(Game game, Graphic_engine *gengine) {
   game_destroy(&game);
   graphic_engine_destroy(gengine);
 }
+
