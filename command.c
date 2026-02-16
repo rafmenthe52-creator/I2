@@ -28,7 +28,7 @@ struct _Command {
   CommandCode code; /*!< Name of the command */
 };
 
-/** space_create allocates memory for a new space
+/** command_create allocates memory for a new command
  *  and initializes its members
  */
 Command* command_create() {
