@@ -29,9 +29,9 @@ Status game_reader_load_spaces(Game *game, char *filename) {
   Id id = NO_ID, north = NO_ID, east = NO_ID, south = NO_ID, west = NO_ID;
   Space *space = NULL;
   Status status = OK;
-  Bool bool_object = FALSE;
+  Bool bool_object;
 
-  if (!filename || !game) {
+  if (!filename) {
     return ERROR;
   }
 
@@ -94,7 +94,7 @@ Status game_reader_load_objects(Game* game, char* filename){
   char *toks = NULL;
   Id id = NO_ID, location = NO_ID;
   Object *object = NULL;
-  Space *space = NULL
+  Space *space =NULL
   Status status = OK;
 
   if(!(filename)){
@@ -110,9 +110,9 @@ Status game_reader_load_objects(Game* game, char* filename){
     if(strncmp("#o:", line, 3) == 0){
       id=atol(strtok(line+3, "|"));
       toks = strtok(NULL, "|");
-      if(toks) strcpy(name, toks);
+      strcpy(name, toks);
       toks = strtok(NULL, "|");
-      if(toks) location=atol(toks);
+      location=atol(toks);
       
       if(!(object=object_create(id))){
         fclose(file);
@@ -121,6 +121,12 @@ Status game_reader_load_objects(Game* game, char* filename){
         object_set_name(object, name);
         object_set_location(object, location);
         status=game_add_object(game, object);
+      }
+
+      space = game_get_space(game, location);
+
+      if(space){
+        space_set_object_id(space, id);
       }
     }
   }
@@ -141,7 +147,6 @@ Status game_reader_load_player(Game* game, char* filename){
   char *toks = NULL;      /*Tokens separated by strtok*/
   Player *player = NULL;
   Id id = NO_ID;
-  Id object = NO_ID;
   Status status= OK;
 
   /*Checking if filename is not NULL*/
@@ -159,16 +164,13 @@ Status game_reader_load_player(Game* game, char* filename){
     if(strncmp("#p:", line , 3) == 0){
       id = atol(strtok(line+3 , "|"));
       toks = strtok(NULL , "|");
-      if(toks) strcpy(name , toks);
-      toks = strtok(NULL , "|");
-      if(toks) object = atol(toks);
+      strcpy(name , toks);
       
       if(!(player=player_create(id))){
         fclose(file);
         return ERROR;
       }else{
         player_set_name(player, name);
-        player_set_objects(player, object);
         status=game_add_player(game, player);
       }
     }
