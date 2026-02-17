@@ -204,7 +204,11 @@ void game_actions_take(Game *game){
   /* Update object location to NO_ID since it's now in player inventory */
   obj = game_get_object(game, current_id);
   if(obj){
+    /*Unassign object location from the space*/
     object_set_location(obj, NO_ID);
+
+    /* Assign object location to player*/
+    object_set_player(obj, player_get_id(game->player))
   }
 
   return;
@@ -223,8 +227,14 @@ void game_actions_drop(Game *game){
     return;
   }
 
+
   player_space_id = player_get_player_location(game->player);
   if(player_space_id == NO_ID){
+    return;
+  }
+
+  /*Check if there is an object in the space*/
+  if(space_get_object_id!=NO_ID){
     return;
   }
 
@@ -240,6 +250,9 @@ void game_actions_drop(Game *game){
   /* Update object location to the space */
   obj = game_get_object(game, current_id);
   if(obj){
+    /*Unassign object location from the player*/
+    object_set_player(obj, NO_ID);
+
     object_set_location(obj, player_space_id);
   }
 

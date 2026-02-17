@@ -13,7 +13,8 @@
 struct Object {
   Id id;                    /*!< Id number of the object, it must be unique */
   char name[WORD_SIZE + 1]; /*!< Name of the space */
-  Id object_location;       /*!< Id of the space the object is located at*/
+  Id space;                 /*!< Id of the space the object is located at*/
+  Id player;                /*!< Id of the player the player who is carrying the object*/
 };
 
 
@@ -106,6 +107,20 @@ Id object_get_location(Object* object){
   }
 
   return object->object_location;
+}
+
+Status object_set_player(Object *object, Id id){
+  if(!object||!id){
+    return ERROR;
+  }
+
+  object->player = id;
+
+  return OK;
+}
+
+Id object_get_player(Object *object){
+  return object->player; 
 }
 
 Status object_print(Object* object) {
