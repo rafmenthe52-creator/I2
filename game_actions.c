@@ -57,11 +57,29 @@ void game_actions_next(Game *game);
 void game_actions_back(Game *game);
 
 /**
+ * @brief It creates a new Game, allocating memory for it;
+ * @author Adrian Covarrubias-AC
+ *
+ * @param game a pointer to a struct of type Game
+ * @return it returns the Status, either OK or ERROR
+ */
+void game_actions_left(Game *game);
+
+/**
+ * @brief It creates a new Game, allocating memory for it;
+ * @author Adrian Covarrubias-AC
+ *
+ * @param game a pointer to a struct of type Game
+ * @return it returns the Status, either OK or ERROR
+ */
+void game_actions_right(Game *game);
+
+/**
  * @brief This function puts the item in the space into the player and deletes it from the space
  * @author Adrian Covarrubias-AC & Rafael Velasco-RV
  *
  * @param game a pointer to a struct of type Game
- * @return void (no return)
+ * @return it returns the Status, either OK or ERROR
  */
 void game_actions_take(Game *game);
 
@@ -70,7 +88,7 @@ void game_actions_take(Game *game);
  * @author Adrian Covarrubas-AC & Rafael Velasco-RV
  *
  * @param game a pointer to a struct of type Game
- * @return void (no return)
+ * @return it returns the Status, either OK or ERROR
  */
 void game_actions_drop(Game *game);
 
@@ -125,6 +143,10 @@ void game_actions_unknown(Game *game) {}
 
 void game_actions_exit(Game *game) {}
 
+void game_actions_left(Game *game){}
+
+void game_actions_right(Game *game){}
+
 void game_actions_next(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
@@ -167,6 +189,53 @@ void game_actions_back(Game *game) {
 
   return;
 }
+
+
+void game_actions_left(Game *game) {
+  Id current_id = NO_ID;
+  Id space_id = NO_ID;
+
+  if (!game || !game->player) {
+    return;
+  }
+
+  space_id = game_get_player_location(game);
+  if (space_id == NO_ID) {
+    return;
+  }    
+
+  current_id = space_get_west(game_get_space(game, space_id));
+  if (current_id != NO_ID) {
+    player_set_player_location(game->player, current_id);
+  }
+
+  return;
+}
+
+void game_actions_right(Game *game) {
+  Id current_id = NO_ID;
+  Id space_id = NO_ID;
+
+  if (!game || !game->player) {
+    return;
+  }
+
+  space_id = game_get_player_location(game);
+  if (space_id == NO_ID) {
+    return;
+  }    
+
+  current_id = space_get_east(game_get_space(game, space_id));
+  if (current_id != NO_ID) {
+    player_set_player_location(game->player, current_id);
+  }
+
+  return;
+}
+
+void game_actions_take(Game *game){}
+
+void game_actions_drop(Game *game){}
 
 void game_actions_take(Game *game){
   Id current_id = NO_ID;
