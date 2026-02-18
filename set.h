@@ -68,6 +68,6 @@
  * @param s a pointer to the struct Set
  * @return Void, no return
  */
- Void set_print(Set *s);
+ void set_print(Set *s);
 
  #endif
